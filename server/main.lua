@@ -182,7 +182,7 @@ function loadESXPlayer(identifier, playerId, isNew)
     }
 
     -- Inventory
-    if not Config.OxInventory then
+    if not Config.OxInventory and not Config.QSInventory then
         local inventory = (result.inventory and result.inventory ~= "") and json.decode(result.inventory) or {}
 
         for name, item in pairs(ESX.Items) do
@@ -219,7 +219,7 @@ function loadESXPlayer(identifier, playerId, isNew)
     end
 
     -- Loadout
-    if not Config.OxInventory then
+    if not Config.OxInventory and not Config.QSInventory then
         if result.loadout and result.loadout ~= "" then
             local loadout = json.decode(result.loadout)
 
@@ -366,7 +366,7 @@ AddEventHandler("esx:playerLogout", function(playerId, cb)
     TriggerClientEvent("esx:onPlayerLogout", playerId)
 end)
 
-if not Config.OxInventory then
+if not Config.OxInventory and not Config.QSInventory then
     RegisterNetEvent("esx:updateWeaponAmmo")
     AddEventHandler("esx:updateWeaponAmmo", function(weaponName, ammoCount)
         local xPlayer = ESX.GetPlayerFromId(source)
@@ -671,7 +671,7 @@ AddEventHandler("txAdmin:events:serverShuttingDown", function()
     Core.SavePlayers()
 end)
 
-local DoNotUse = {
+--[[ local DoNotUse = {
     ["essentialmode"] = true,
     ["es_admin2"] = true,
     ["basic-gamemode"] = true,
@@ -699,3 +699,4 @@ for key in pairs(DoNotUse) do
         error(("WE STOPPED A RESOURCE THAT WILL BREAK ^1ESX^7, PLEASE REMOVE ^5%s^7"):format(key))
     end
 end
+ ]]
